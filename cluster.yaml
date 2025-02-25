@@ -1,0 +1,41 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: fly-eks
+  region: us-east-1
+  version: "1.32"
+
+managedNodeGroups:
+  - name: default
+    minSize: 2
+    maxSize: 4
+    desiredCapacity: 2
+    instanceType: t3.medium
+    volumeSize: 20
+    labels: {role: worker}
+    tags:
+      nodegroup-role: worker
+
+accessConfig:
+  authenticationMode: API
+  accessEntries:
+    - principalARN: arn:aws:iam::654654165875:user/laravel-eks-admin
+      type: STANDARD
+      accessPolicies:
+        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+          accessScope:
+            type: cluster
+
+cloudWatch:
+    clusterLogging:
+        enableTypes: ["api", "scheduler",  "authenticator", "controllerManager"]
+        # all supported types: "api", "audit", "authenticator", "controllerManager", "scheduler"
+        # supported special values: "*" and "all"
+
+vpc:
+  cidr: 10.10.0.0/16
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true

@@ -1,0 +1,10 @@
+version: "3"
+
+tasks:
+  up:
+    cmds:
+      - eksctl create cluster -f cluster.yaml
+      - ./scripts/bootstrap.sh
+  down:
+    cmds:
+      - eksctl delete cluster -f cluster.yaml

@@ -21,7 +21,7 @@ managedNodeGroups:
 accessConfig:
   authenticationMode: API
   accessEntries:
-    - principalARN: arn:aws:iam::654654165875:user/laravel-eks-admin
+    - principalARN: ${ACCESS_ARN}
       type: STANDARD
       accessPolicies:
         - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy

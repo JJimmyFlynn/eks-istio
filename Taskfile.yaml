@@ -3,7 +3,8 @@ version: "3"
 tasks:
   up:
     cmds:
-      - eksctl create cluster -f cluster.yaml
+      - export $(cat .env | xargs)
+      - envsubst < cluster.yaml | eksctl create cluster -f -
       - ./scripts/bootstrap.sh
   down:
     cmds:

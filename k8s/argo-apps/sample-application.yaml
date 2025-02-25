@@ -5,8 +5,12 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
   source:
-    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    repoURL: https://github.com/JJimmyFlynn/eks-istio
     targetRevision: HEAD
     path: k8s/sample-application
   destination:

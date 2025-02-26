@@ -3,9 +3,14 @@ version: "3"
 tasks:
   up:
     cmds:
-      - export $(cat .env | xargs)
+      - task: export-variables
       - envsubst < cluster.yaml | eksctl create cluster -f -
       - ./scripts/bootstrap.sh
   down:
     cmds:
-      - eksctl delete cluster -f cluster.yaml
+      - task: export-variables
+      - envsubst < cluster.yaml | eksctl delete cluster -f -
+  export-variables:
+    internal: true
+    cmds:
+      - export $(cat .env | xargs)
